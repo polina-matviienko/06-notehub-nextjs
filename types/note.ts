@@ -8,10 +8,3 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
 }
-
-export interface FetchNotesResponse {
-  notes: Note[];
-  totalNotes: number;
-  totalPages: number;
-  currentPage: number;
-}
