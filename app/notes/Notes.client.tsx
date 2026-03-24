@@ -1,7 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useState } from "react";
+import { useDebounce } from "use-debounce";
 import { fetchNotes } from "../../lib/api";
 import NoteList from "../../components/NoteList/NoteList";
 import SearchBox from "../../components/SearchBox/SearchBox";
@@ -15,9 +16,13 @@ export default function NotesClient() {
   const [search, setSearch] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const [debouncedSearch] = useDebounce(search, 500);
+
   const { data } = useQuery({
-    queryKey: ["notes", page, search],
-    queryFn: () => fetchNotes(page, search),
+    queryKey: ["notes", page, debouncedSearch, 9],
+    queryFn: () => fetchNotes(page, debouncedSearch, 9),
+
+    placeholderData: keepPreviousData,
   });
 
   return (

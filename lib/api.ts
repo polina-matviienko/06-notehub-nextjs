@@ -23,9 +23,14 @@ noteApi.interceptors.request.use((config) => {
 export const fetchNotes = async (
   page = 1,
   search = "",
+  perPage = 9,
 ): Promise<FetchNotesResponse> => {
   const { data } = await noteApi.get<FetchNotesResponse>("/notes", {
-    params: { page, perPage: 9, search },
+    params: {
+      page,
+      perPage,
+      search,
+    },
   });
   return data;
 };
