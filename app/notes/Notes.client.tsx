@@ -1,4 +1,5 @@
 "use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { fetchNotes } from "../../lib/api";
@@ -28,20 +29,21 @@ export default function NotesClient() {
             setPage(1);
           }}
         />
+
+        {data && data.totalPages > 1 && (
+          <Pagination
+            pageCount={data.totalPages}
+            onPageChange={(p) => setPage(p)}
+            forcePage={page - 1}
+          />
+        )}
+
         <button className={css.button} onClick={() => setModalOpen(true)}>
           Create note +
         </button>
       </div>
 
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
-
-      {data && data.totalPages > 1 && (
-        <Pagination
-          pageCount={data.totalPages}
-          onPageChange={(p) => setPage(p)}
-          forcePage={page - 1}
-        />
-      )}
 
       {isModalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
