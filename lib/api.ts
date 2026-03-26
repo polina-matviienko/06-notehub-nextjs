@@ -3,9 +3,7 @@ import { Note } from "../types/note";
 
 export interface FetchNotesResponse {
   notes: Note[];
-  totalNotes: number;
   totalPages: number;
-  currentPage: number;
 }
 
 const noteApi = axios.create({
